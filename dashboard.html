@@ -3,37 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SDS Dashboard 2x2 – strak</title>
+  <title>SDS Dashboard 2x2 – cover</title>
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <style>
-    /* Volledig scherm, geen randen of scroll */
     html,body{height:100%;margin:0;background:#000;overflow:hidden}
-
-    /* 2x2 grid zonder ruimte ertussen */
     .grid{
       position:fixed; inset:0;
       display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
       gap:0; padding:0;
     }
-
-    /* Elke tegel: verbergt scrollbars en snijdt af wat buiten beeld valt */
     .tile{position:relative; overflow:hidden; background:#000}
     .tile iframe{
+      position:absolute; top:50%; left:50%;
       width:100%; height:100%;
       border:0; display:block; background:#000;
+      transform:translate(-50%,-50%);
     }
-
-    /* Google Slides croppen: geen balk onder + geen zwarte randen links/rechts */
-    .tile.slides iframe{
-      position:absolute;
-      top:-36px;                     /* verbergt onderbalk */
-      left:-9%;                      /* schuif iets naar links */
-      width:118%;                    /* iets breder om zwarte randen te maskeren */
-      height:calc(100% + 72px);      /* extra hoogte om boven/onder te vangen */
+    /* --- Cover-truc per paneel (haal randen weg) --- */
+    /* Slides: iets groter + klein horizontaal overschot om links/rechts zwart weg te snijden */
+    .slides iframe{
+      width:118%; height:112%;                /* overvullen */
+      transform:translate(-50%,-52%);         /* iets omhoog om Google-balk te ‘croppen’ */
     }
-
-    /* Optioneel: YouTube net wat cleaner zonder cursor */
-    .tile.youtube{cursor:none}
+    /* SDS site: iets groter om eventuele witruimtes te verbergen */
+    .site iframe{
+      width:108%; height:108%;
+    }
+    /* Sheets: vaak iets smaller/hoger → maak ‘m groter zodat alles vol staat */
+    .sheet iframe{
+      width:110%; height:110%;
+    }
+    /* YouTube: player is 16:9, laat ‘m overvullen zodat je geen randen ziet */
+    .youtube iframe{
+      width:118%; height:118%;
+    }
+    /* Optioneel: cursor weg bij video */
+    .youtube{cursor:none}
   </style>
 </head>
 <body>
@@ -47,19 +52,19 @@
       </iframe>
     </div>
 
-    <!-- Rechts-boven: SDS-website (scroll verbergen) -->
-    <div class="tile">
+    <!-- Rechts-boven: SDS-website -->
+    <div class="tile site">
       <iframe src="https://www.sdsommen.nl/" scrolling="no"></iframe>
     </div>
 
-    <!-- Links-onder: Google Spreadsheet (tabs/titel verbergen met single=true) -->
-    <div class="tile">
+    <!-- Links-onder: Google Spreadsheet (gepubliceerd) -->
+    <div class="tile sheet">
       <iframe
         src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxzI_1uftG62wPNjObFxY__OYfp1QxpqBNHZhSWryj2CQQUHIZpikeVcu5p2qh5cqC-ZpIhB6WM0fV/pubhtml?widget=true&headers=false&single=true">
       </iframe>
     </div>
 
-    <!-- Rechts-onder: YouTube (clean) -->
+    <!-- Rechts-onder: YouTube -->
     <div class="tile youtube">
       <iframe
         src="https://www.youtube.com/embed/S35uPf--D6k?autoplay=1&mute=1&loop=1&playlist=S35uPf--D6k&controls=0&modestbranding=1&playsinline=1&rel=0"
