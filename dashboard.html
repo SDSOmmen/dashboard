@@ -3,45 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard 2x2 – randloos</title>
+  <title>Dashboard 2x2 – strak</title>
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <style>
+    /* Volledig randloos grid */
     html,body{height:100%;margin:0;background:#000;overflow:hidden}
-    .grid{
-      position:fixed; inset:0;          /* vult het hele scherm */
-      display:grid;
-      grid-template-columns:1fr 1fr;    /* 2 kolommen */
-      grid-template-rows:1fr 1fr;       /* 2 rijen */
-      gap:0;                            /* <-- geen ruimte tussen panelen */
-      padding:0;                        /* <-- geen buitenrand */
+    .grid{position:fixed;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0}
+
+    /* Elke tegel heeft een wrapper die scrollbars verbergt */
+    .tile{position:relative;overflow:hidden;background:#000}
+    .tile iframe{
+      width:100%;height:100%;border:0;display:block;background:#000
     }
-    iframe{
-      width:100%; height:100%;
-      border:0; display:block;          /* geen mini-ruimte door inline baseline */
-      background:#000;                  /* geen rand als content kleiner is */
-      overflow:hidden;                  /* scrollbar-lijntjes voorkomen */
+
+    /* Overlay om het Google Slides-balkje af te dekken (±32px hoog) */
+    .tile.slides::after{
+      content:""; position:absolute; left:0; right:0; bottom:0; height:34px;
+      background:#000; pointer-events:none; /* klikken gaan gewoon door */
     }
+
+    /* Optioneel: YouTube zonder muisaanwijzer (net wat cleaner) */
+    .tile.youtube{cursor:none}
   </style>
 </head>
 <body>
   <div class="grid">
-    <!-- Links-boven: Google Slides -->
-    <iframe
-      src="https://docs.google.com/presentation/d/e/2PACX-1vTB4lMt4bamqBAP1FgsCRuuyZ1iBBkj1qrEMBdXDIq47oZyPu_85UEFIU5lyWURwpGmEIPeRTX7Z4qq/embed?start=true&loop=true&delayms=10000"
-      allowfullscreen
-      referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-    <!-- Rechts-boven: SDS Ommen -->
-    <iframe src="https://www.sdsommen.nl/"></iframe>
+    <!-- Links-boven: Google Slides (EMBED) + overlay om balkje te verbergen -->
+    <div class="tile slides">
+      <iframe
+        src="https://docs.google.com/presentation/d/e/2PACX-1vTB4lMt4bamqBAP1FgsCRuuyZ1iBBkj1qrEMBdXDIq47oZyPu_85UEFIU5lyWURwpGmEIPeRTX7Z4qq/embed?start=true&loop=true&delayms=10000"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
 
-    <!-- Links-onder: Google Spreadsheet -->
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxzI_1uftG62wPNjObFxY__OYfp1QxpqBNHZhSWryj2CQQUHIZpikeVcu5p2qh5cqC-ZpIhB6WM0fV/pubhtml?widget=true&headers=false"></iframe>
+    <!-- Rechts-boven: SDS-website (scroll verbergen) -->
+    <div class="tile">
+      <iframe src="https://www.sdsommen.nl/" scrolling="no"></iframe>
+    </div>
 
-    <!-- Rechts-onder: YouTube -->
-    <iframe
-      src="https://www.youtube.com/embed/S35uPf--D6k?autoplay=1&mute=1&loop=1&playlist=S35uPf--D6k"
-      allow="autoplay; fullscreen"></iframe>
+    <!-- Links-onder: Google Spreadsheet (tabs/titel weg met single=true) -->
+    <div class="tile">
+      <iframe
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxzI_1uftG62wPNjObFxY__OYfp1QxpqBNHZhSWryj2CQQUHIZpikeVcu5p2qh5cqC-ZpIhB6WM0fV/pubhtml?widget=true&headers=false&single=true">
+      </iframe>
+    </div>
+
+    <!-- Rechts-onder: YouTube clean (geen controls/branding) -->
+    <div class="tile youtube">
+      <iframe
+        src="https://www.youtube.com/embed/S35uPf--D6k?autoplay=1&mute=1&loop=1&playlist=S35uPf--D6k&controls=0&modestbranding=1&playsinline=1&rel=0"
+        allow="autoplay; fullscreen; encrypted-media">
+      </iframe>
+    </div>
+
   </div>
 </body>
 </html>
-
