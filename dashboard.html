@@ -3,20 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SDS Dashboard 2x2 – cover (tunable)</title>
+  <title>SDS Dashboard 2x2 – present mode</title>
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <style>
     :root{
-      /* ---- TWEAK HIER ZONDER CODE TE ZOEKEN ---- */
-      /* Slides: schaal & verticale verschuiving (negatief = omhoog) */
-      --slides-scale-w: 116%;
-      --slides-scale-h: 110%;
-      --slides-shift-y: -50%;  /* was -52%, nu minder zodat de bovenkant zichtbaar is */
-
-      /* Site, Sheet, YouTube: kleine overfill om randen te voorkomen */
-      --site-scale: 108%;
-      --sheet-scale: 110%;
-      --yt-scale: 116%;
+      /* Een tikje “cover” om randen te voorkomen (pas zo nodig iets aan) */
+      --slides-scale: 112%;
+      --site-scale:   108%;
+      --sheet-scale:  110%;
+      --yt-scale:     116%;
     }
 
     html,body{height:100%;margin:0;background:#000;overflow:hidden}
@@ -25,6 +20,7 @@
       display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
       gap:0; padding:0;
     }
+
     .tile{position:relative; overflow:hidden; background:#000}
     .tile iframe{
       position:absolute; top:50%; left:50%;
@@ -33,38 +29,23 @@
       transform:translate(-50%,-50%);
     }
 
-    /* Slides: “cover” zonder balken */
-    .slides iframe{
-      width:var(--slides-scale-w);
-      height:var(--slides-scale-h);
-      /* iets minder omhoog dan vorige versie: */
-      transform:translate(-50%, var(--slides-shift-y));
-    }
+    /* Slides in present-modus: iets groter om zwarte randen te vermijden */
+    .slides iframe{ width:var(--slides-scale); height:var(--slides-scale); }
 
-    .site iframe{
-      width:var(--site-scale);
-      height:var(--site-scale);
-    }
+    /* Andere panelen ook licht “coveren” voor strakke randen */
+    .site   iframe{ width:var(--site-scale);  height:var(--site-scale);  }
+    .sheet  iframe{ width:var(--sheet-scale); height:var(--sheet-scale); }
+    .youtube iframe{width:var(--yt-scale);    height:var(--yt-scale);    }
 
-    .sheet iframe{
-      width:var(--sheet-scale);
-      height:var(--sheet-scale);
-    }
-
-    .youtube iframe{
-      width:var(--yt-scale);
-      height:var(--yt-scale);
-    }
-
-    .youtube{cursor:none}
+    .youtube{cursor:none} /* optisch rustiger bij video */
   </style>
 </head>
 <body>
   <div class="grid">
-    <!-- Links-boven: Google Slides -->
+    <!-- Links-boven: Google Slides in PRESENT-modus (geen balk) -->
     <div class="tile slides">
       <iframe
-        src="https://docs.google.com/presentation/d/e/2PACX-1vTB4lMt4bamqBAP1FgsCRuuyZ1iBBkj1qrEMBdXDIq47oZyPu_85UEFIU5lyWURwpGmEIPeRTX7Z4qq/embed?start=true&loop=true&delayms=10000"
+        src="https://docs.google.com/presentation/d/e/2PACX-1vTB4lMt4bamqBAP1FgsCRuuyZ1iBBkj1qrEMBdXDIq47oZyPu_85UEFIU5lyWURwpGmEIPeRTX7Z4qq/present?rm=minimal&start=true&loop=true"
         allow="fullscreen"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
@@ -75,14 +56,14 @@
       <iframe src="https://www.sdsommen.nl/" scrolling="no"></iframe>
     </div>
 
-    <!-- Links-onder: Google Spreadsheet -->
+    <!-- Links-onder: Google Spreadsheet (gepubliceerd) -->
     <div class="tile sheet">
       <iframe
         src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxzI_1uftG62wPNjObFxY__OYfp1QxpqBNHZhSWryj2CQQUHIZpikeVcu5p2qh5cqC-ZpIhB6WM0fV/pubhtml?widget=true&headers=false&single=true">
       </iframe>
     </div>
 
-    <!-- Rechts-onder: YouTube -->
+    <!-- Rechts-onder: YouTube (clean) -->
     <div class="tile youtube">
       <iframe
         src="https://www.youtube.com/embed/S35uPf--D6k?autoplay=1&mute=1&loop=1&playlist=S35uPf--D6k&controls=0&modestbranding=1&playsinline=1&rel=0"
