@@ -3,22 +3,52 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SDS Dashboard 2x2</title>
+  <title>SDS Dashboard 2x2 – full cover</title>
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <style>
+    /* ========= TUNE HIER ZO NODIG ========= */
+    :root{
+      /* Iets agressiever schalen voor gegarandeerd geen balken */
+      --slides-scale: 122%;
+      --site-scale:   115%;
+      --sheet-scale:  115%;
+      --yt-scale:     122%;
+      /* Slides klein tikje omhoog zodat de Google-balk zeker weg is */
+      --slides-shift-y: -51%;
+    }
+    /* ====================================== */
+
     html,body{height:100%;margin:0;background:#000;overflow:hidden}
-    .grid{position:fixed;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0}
-    .tile{position:relative;overflow:hidden;background:#000}
-    .tile iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block;background:#000}
+    .grid{
+      position:fixed; inset:0;
+      display:grid; gap:0; padding:0;
+      grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+    }
 
-    /* Slides: gebruik /embed + klein overschot en een dunne overlay om Google-balk te maskeren */
-    .slides iframe{top:-34px;left:-8%;width:116%;height:calc(100% + 68px)}
-    .slides::after{content:"";position:absolute;left:0;right:0;bottom:0;height:26px;background:#000;pointer-events:none}
+    .tile{position:relative; overflow:hidden; background:#000}
+    .tile iframe{
+      position:absolute; top:50%; left:50%;
+      width:100%; height:100%;
+      border:0; display:block; background:#000;
+      transform:translate(-50%,-50%);
+      /* geen scrollbars in de iframes zichtbaar */
+    }
 
-    /* Andere panelen iets “coveren” voor geen randen/scroll */
-    .site   iframe{width:108%;height:108%}
-    .sheet  iframe{width:110%;height:110%}
-    .youtube iframe{width:116%;height:116%}
+    /* Slides (EMBED) – cover + mini-upshift om balk te maskeren */
+    .slides iframe{
+      width:var(--slides-scale);
+      height:var(--slides-scale);
+      transform:translate(-50%, var(--slides-shift-y));
+    }
+
+    /* Website – cover */
+    .site iframe{  width:var(--site-scale);  height:var(--site-scale);  }
+
+    /* Google Sheets – cover */
+    .sheet iframe{ width:var(--sheet-scale); height:var(--sheet-scale); }
+
+    /* YouTube – cover, clean */
+    .youtube iframe{ width:var(--yt-scale); height:var(--yt-scale); }
     .youtube{cursor:none}
   </style>
 </head>
@@ -26,20 +56,31 @@
   <div class="grid">
     <!-- Links-boven: Google Slides (EMBED!) -->
     <div class="tile slides">
-      <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTB4lMt4bamqBAP1FgsCRuuyZ1iBBkj1qrEMBdXDIq47oZyPu_85UEFIU5lyWURwpGmEIPeRTX7Z4qq/embed?start=true&loop=true&delayms=10000" allowfullscreen></iframe>
+      <iframe
+        src="https://docs.google.com/presentation/d/e/2PACX-1vTB4lMt4bamqBAP1FgsCRuuyZ1iBBkj1qrEMBdXDIq47oZyPu_85UEFIU5lyWURwpGmEIPeRTX7Z4qq/embed?start=true&loop=true&delayms=10000"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
 
-    <!-- Rechts-boven: SDS site -->
-    <div class="tile site"><iframe src="https://www.sdsommen.nl/" scrolling="no"></iframe></div>
+    <!-- Rechts-boven: SDS website -->
+    <div class="tile site">
+      <iframe src="https://www.sdsommen.nl/" scrolling="no"></iframe>
+    </div>
 
-    <!-- Links-onder: Google Sheets (PUBHTML) -->
+    <!-- Links-onder: Google Sheets (LET OP: pubhtml-URL invullen) -->
     <div class="tile sheet">
-      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxzI_1uftG62wPNjObFxY__OYfp1QxpqBNHZhSWryj2CQQUHIZpikeVcu5p2qh5cqC-ZpIhB6WM0fV/pubhtml?widget=true&headers=false&single=true"></iframe>
+      <iframe
+        src="SHEETS_PUBHTML_URL_HIER">
+      </iframe>
     </div>
 
-    <!-- Rechts-onder: YouTube -->
+    <!-- Rechts-onder: YouTube (clean) -->
     <div class="tile youtube">
-      <iframe src="https://www.youtube.com/embed/S35uPf--D6k?autoplay=1&mute=1&loop=1&playlist=S35uPf--D6k&controls=0&modestbranding=1&playsinline=1&rel=0" allow="autoplay; fullscreen; encrypted-media"></iframe>
+      <iframe
+        src="https://www.youtube.com/embed/S35uPf--D6k?autoplay=1&mute=1&loop=1&playlist=S35uPf--D6k&controls=0&modestbranding=1&playsinline=1&rel=0"
+        allow="autoplay; fullscreen; encrypted-media">
+      </iframe>
     </div>
   </div>
 </body>
